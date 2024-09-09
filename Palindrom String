@@ -1,0 +1,52 @@
+#include <iostream>
+#include <cctype>   
+#include <cstring>  
+using namespace std;
+
+char stack[30]; 
+int top = -1;   
+
+// Push function for stack
+void push(char x) {
+    stack[++top] = x; 
+}
+
+// Pop function for stack
+char pop() {
+    return stack[top--]; 
+}
+
+int main() {
+    int count = 0;  // To track valid characters
+    char c[40];     
+    char r[40];    
+
+    cout << "Enter the statement: ";
+    cin.getline(c, 40);  
+
+    for (int i = 0; c[i] != '\0'; i++) {
+        if (isalnum(c[i])) {  // Only process alphanumeric characters
+            char lowerChar = tolower(c[i]);
+            push(lowerChar);   // Push valid character onto stack
+            r[count++] = lowerChar;  // Store valid characters in array
+        }
+    }
+
+   
+    int flag = 1;
+    for (int i = 0; i < count; i++) {
+        if (pop() != r[i]) {  // Compare characters from stack and array
+            flag = 0;         // If mismatch found, it's not a palindrome
+            break;
+        }
+    }
+
+   
+    if (flag == 1) {
+        cout << "\nPalindrome" << endl;
+    } else {
+        cout << "\nNot a Palindrome" << endl;
+    }
+
+    return 0;
+}
